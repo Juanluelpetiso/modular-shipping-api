@@ -1,0 +1,6 @@
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\application\service\ShippingServiceTest.java
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\domain\strategy\ExpressShippingStrategyTest.java
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\domain\strategy\InternationalShippingStrategyTest.java
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\domain\strategy\NationalShippingStrategyTest.java
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\infrastructure\api\controller\ShippingControllerIntegrationTest.java
+D:\Proyectitos\Motor de Cálculo de Envíos\src\test\java\com\jretamales\shipping\ShippingApplicationTests.java

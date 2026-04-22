@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpressShippingStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Modular Shipping API</a> &gt; <a href="index.source.html" class="el_package">com.jretamales.shipping.domain.strategy</a> &gt; <span class="el_source">ExpressShippingStrategy.java</span></div><h1>ExpressShippingStrategy.java</h1><pre class="source lang-java linenums">package com.jretamales.shipping.domain.strategy;
+
+import com.jretamales.shipping.domain.exception.ShippingException;
+import com.jretamales.shipping.domain.model.CostBreakdown;
+import com.jretamales.shipping.domain.model.ShipmentType;
+import com.jretamales.shipping.domain.model.ShippingCalculation;
+import org.springframework.stereotype.Component;
+
+/**
+ * Estrategia de cálculo para envíos express (entrega garantizada en 24 horas).
+ *
+ * &lt;p&gt;&lt;b&gt;Skill citada:&lt;/b&gt; {@code .ai/skills/skill-express.md}&lt;/p&gt;
+ * &lt;p&gt;&lt;b&gt;Fórmula:&lt;/b&gt; {@code Total = (20000.0 + (Peso × 5.0)) × 1.50}&lt;/p&gt;
+ *
+ * &lt;p&gt;&lt;b&gt;Restricción:&lt;/b&gt; Solo disponible para envíos nacionales (Argentina).
+ * Si se detecta un envío internacional, se lanza {@link ShippingException}.&lt;/p&gt;
+ *
+ * &lt;ul&gt;
+ *   &lt;li&gt;Base Rate Express: $20,000 ARS&lt;/li&gt;
+ *   &lt;li&gt;Factor de peso: 5.0 por kg (mismo que nacional)&lt;/li&gt;
+ *   &lt;li&gt;Recargo de prioridad: 50%&lt;/li&gt;
+ *   &lt;li&gt;Moneda: ARS&lt;/li&gt;
+ *   &lt;li&gt;Entrega garantizada: 1 día (24hs)&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@Component
+<span class="fc" id="L27">public class ExpressShippingStrategy implements ShippingStrategy {</span>
+
+    private static final double BASE_RATE = 20000.0;
+    private static final double WEIGHT_FACTOR = 5.0;
+    private static final double EXPRESS_SURCHARGE_RATE = 0.50;
+    private static final String CURRENCY = &quot;ARS&quot;;
+    private static final int ESTIMATED_DAYS = 1;
+
+    @Override
+    public ShipmentType getShipmentType() {
+<span class="fc" id="L37">        return ShipmentType.EXPRESS;</span>
+    }
+
+    @Override
+    public ShippingCalculation calculate(double weight, String origin, String destination) {
+        // Validación: Express solo disponible para envíos nacionales (skill-express.md Pattern 1)
+<span class="fc" id="L43">        validateNationalShipment(origin, destination);</span>
+
+<span class="fc" id="L45">        double distanceFee = weight * WEIGHT_FACTOR;</span>
+<span class="fc" id="L46">        double subtotal = BASE_RATE + distanceFee;</span>
+<span class="fc" id="L47">        double expressSurcharge = subtotal * EXPRESS_SURCHARGE_RATE;</span>
+<span class="fc" id="L48">        double totalCost = subtotal + expressSurcharge;</span>
+
+<span class="fc" id="L50">        return new ShippingCalculation(</span>
+            totalCost,
+            CURRENCY,
+            ESTIMATED_DAYS,
+            new CostBreakdown(BASE_RATE, distanceFee, 0.0)
+        );
+    }
+
+    /**
+     * Valida que el envío sea nacional. El servicio Express de 24hs
+     * no está disponible para envíos internacionales.
+     *
+     * &lt;p&gt;Nota: En producción, esta validación se haría contra un catálogo
+     * de localidades/países. Por ahora se valida que origen y destino no estén vacíos.&lt;/p&gt;
+     */
+    private void validateNationalShipment(String origin, String destination) {
+<span class="pc bpc" id="L66" title="2 of 8 branches missed.">        if (origin == null || origin.isBlank() || destination == null || destination.isBlank()) {</span>
+<span class="fc" id="L67">            throw new ShippingException(</span>
+                &quot;Servicio Express solo disponible para envíos nacionales. &quot; +
+                &quot;Origen y destino son obligatorios.&quot;
+            );
+        }
+<span class="fc" id="L72">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
