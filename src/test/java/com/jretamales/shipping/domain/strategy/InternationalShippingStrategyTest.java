@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitarios para InternationalShippingStrategy.
  * Skill citada: skill-international.md
- * Fórmula verificada: Total = (20000.0 + (Peso × 15.0)) × 1.25
+ * Fórmula verificada: Total = (25.0 + (Peso × 15.0)) × 1.25
  */
 class InternationalShippingStrategyTest {
 
@@ -29,18 +29,18 @@ class InternationalShippingStrategyTest {
     }
 
     @Test
-    @DisplayName("Debe calcular correctamente: (20000 + (10.5 × 15)) × 1.25 = 25196.875")
+    @DisplayName("Debe calcular correctamente: (25.0 + (10.5 × 15)) × 1.25 = 228.125")
     void shouldCalculateInternationalRateCorrectly() {
         ShippingCalculation result = strategy.calculate(10.5, "Buenos Aires", "New York");
 
-        double expectedSubtotal = 20000.0 + (10.5 * 15.0);     // 20157.5
-        double expectedCustomsTax = expectedSubtotal * 0.25;     // 5039.375
-        double expectedTotal = expectedSubtotal + expectedCustomsTax; // 25196.875
+        double expectedSubtotal = 25.0 + (10.5 * 15.0);              // 182.5
+        double expectedCustomsTax = expectedSubtotal * 0.25;          // 45.625
+        double expectedTotal = expectedSubtotal + expectedCustomsTax; // 228.125
 
         assertEquals(expectedTotal, result.totalCost());
         assertEquals("USD", result.currency());
         assertEquals(15, result.estimatedDeliveryDays());
-        assertEquals(20000.0, result.breakdown().baseRate());
+        assertEquals(25.0, result.breakdown().baseRate());
         assertEquals(10.5 * 15.0, result.breakdown().distanceFee());
         assertEquals(expectedCustomsTax, result.breakdown().customsTax());
     }
@@ -50,9 +50,9 @@ class InternationalShippingStrategyTest {
     void shouldAlwaysIncludeCustomsTax() {
         ShippingCalculation result = strategy.calculate(0.0, "Buenos Aires", "Madrid");
 
-        // Peso 0: subtotal = 20000, customs = 5000, total = 25000
-        assertEquals(25000.0, result.totalCost());
-        assertEquals(5000.0, result.breakdown().customsTax());
+        // Peso 0: subtotal = 25.0, customs = 6.25, total = 31.25
+        assertEquals(31.25, result.totalCost());
+        assertEquals(6.25, result.breakdown().customsTax());
     }
 
     @Test

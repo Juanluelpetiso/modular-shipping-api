@@ -1,0 +1,19 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Modular Shipping API,com.jretamales.shipping.application.resolver,ShippingStrategyResolver,5,23,0,0,0,7,1,2,1,2
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.controller,ShippingController,0,28,0,0,0,10,0,2,0,2
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.controller,GlobalExceptionHandler,17,84,0,0,3,16,3,5,3,5
+Modular Shipping API,com.jretamales.shipping.domain.model,CostBreakdown,0,12,0,0,0,1,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.domain.model,ShipmentType,0,21,0,0,0,4,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.domain.model,ShippingCalculation,0,15,0,0,0,1,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.domain.strategy,ExpressShippingStrategy,0,54,2,6,0,11,2,6,0,4
+Modular Shipping API,com.jretamales.shipping.domain.strategy,NationalShippingStrategy,0,26,0,0,0,5,0,3,0,3
+Modular Shipping API,com.jretamales.shipping.domain.strategy,InternationalShippingStrategy,0,34,0,0,0,11,0,3,0,3
+Modular Shipping API,com.jretamales.shipping.domain.exception,UnsupportedShipmentTypeException,11,0,0,0,4,0,2,0,2,0
+Modular Shipping API,com.jretamales.shipping.domain.exception,ShippingException,5,4,0,0,2,2,1,1,1,1
+Modular Shipping API,com.jretamales.shipping.infrastructure.config,SwaggerConfig,0,23,0,0,0,8,0,2,0,2
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.mapper,ShippingMapper,0,25,0,0,0,8,0,2,0,2
+Modular Shipping API,com.jretamales.shipping,ShippingApplication,5,3,0,0,2,1,1,1,1,1
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.dto,ShippingResponse.BreakdownResponse,0,12,0,0,0,1,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.dto,ShippingRequest,0,15,0,0,0,1,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.infrastructure.api.dto,ShippingResponse,0,15,0,0,0,1,0,1,0,1
+Modular Shipping API,com.jretamales.shipping.application.service,ShippingService,0,17,0,0,0,5,0,2,0,2

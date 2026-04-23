@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShippingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Modular Shipping API</a> &gt; <a href="index.source.html" class="el_package">com.jretamales.shipping.application.service</a> &gt; <span class="el_source">ShippingService.java</span></div><h1>ShippingService.java</h1><pre class="source lang-java linenums">package com.jretamales.shipping.application.service;
+
+import com.jretamales.shipping.application.resolver.ShippingStrategyResolver;
+import com.jretamales.shipping.domain.model.ShipmentType;
+import com.jretamales.shipping.domain.model.ShippingCalculation;
+import com.jretamales.shipping.domain.strategy.ShippingStrategy;
+import org.springframework.stereotype.Service;
+
+/**
+ * Caso de uso principal: cálculo de tarifas de envío.
+ *
+ * &lt;p&gt;Orquesta la resolución de la estrategia correcta y la ejecución del cálculo.
+ * No contiene lógica de negocio — solo coordina el flujo entre el resolver
+ * y la estrategia seleccionada.&lt;/p&gt;
+ */
+@Service
+public class ShippingService {
+
+    private final ShippingStrategyResolver resolver;
+
+<span class="fc" id="L21">    public ShippingService(ShippingStrategyResolver resolver) {</span>
+<span class="fc" id="L22">        this.resolver = resolver;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Calcula la tarifa de envío delegando al módulo de cálculo apropiado.
+     *
+     * @param type        Tipo de envío (NATIONAL, INTERNATIONAL, EXPRESS)
+     * @param weight      Peso del paquete en kg
+     * @param origin      Ciudad/país de origen
+     * @param destination Ciudad/país de destino
+     * @return Resultado completo del cálculo con desglose de costos
+     */
+    public ShippingCalculation calculateRate(ShipmentType type, double weight,
+                                              String origin, String destination) {
+<span class="fc" id="L36">        ShippingStrategy strategy = resolver.resolve(type);</span>
+<span class="fc" id="L37">        return strategy.calculate(weight, origin, destination);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

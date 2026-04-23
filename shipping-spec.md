@@ -45,6 +45,6 @@ Response Body (JSON):
   }
 }
 
-6. Reglas de Negocio (Core Logic)Módulo Nacional: 10000.0 + (Peso * 5.0).Módulo Internacional: (20000.0 + (Peso * 15.0)) * 1.25 (Incluye 25% de recargo aduanero obligatorio).Módulo Express:Restricción: Solo disponible para envíos Nacionales.Garantía: Entrega en 24 horas.Recargo: 50% extra sobre el total del cálculo nacional base (Base: 20000.0).
+6. Reglas de Negocio (Core Logic)Módulo Nacional: 10000.0 + (Peso * 5.0).Módulo Internacional: (25.0 + (Peso * 15.0)) * 1.25 (Incluye 25% de recargo aduanero obligatorio, moneda: USD).Módulo Express:Restricción: Solo disponible para envíos Nacionales.Garantía: Entrega en 24 horas.Recargo: 50% extra sobre el total del cálculo nacional base (Base: 20000.0).
 
 7. Protocolo Human in the Loop (HITL) Punto de Aprobación 1: El agente debe presentar un plan de arquitectura detallado antes de crear archivos.Punto de Aprobación 2: Los tests generados deben ser validados manualmente antes de integrarse al repositorio .Transparencia: El agente debe citar qué Skill utilizó para cada componente generado .

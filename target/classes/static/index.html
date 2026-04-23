@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora de tarifas de envío modular — Nacional, Internacional y Express. Motor basado en Clean Architecture y Strategy Pattern.">
+  <title>Motor de Cálculo de Envíos | Modular Shipping API</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- ════ Header ════ -->
+    <header class="app-header">
+      <div class="app-header__logo">📦</div>
+      <h1 class="app-header__title">
+        Motor de Envíos
+        <span class="badge">API v1</span>
+      </h1>
+      <p class="app-header__subtitle">Calculá tu tarifa de envío al instante</p>
+    </header>
+
+    <!-- ════ Formulario Principal ════ -->
+    <main>
+      <form id="shipping-form" class="glass-card" autocomplete="off">
+
+        <!-- Tipo de Origen -->
+        <div class="form-section">
+          <div class="form-section__title">Tipo de Origen</div>
+          <div class="radio-group" role="radiogroup" aria-label="Tipo de origen">
+            <div class="radio-option">
+              <input type="radio" id="type-national" name="origin-type" value="national" checked>
+              <label for="type-national" class="radio-option__label">
+                <span class="radio-option__icon">🇦🇷</span>
+                Nacional
+              </label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="type-international" name="origin-type" value="international">
+              <label for="type-international" class="radio-option__label">
+                <span class="radio-option__icon">🌎</span>
+                Internacional
+              </label>
+            </div>
+          </div>
+
+          <!-- Express Checkbox (solo visible en Nacional) -->
+          <div id="express-wrapper" class="express-wrapper visible">
+            <label class="express-label" for="express-check">
+              <input type="checkbox" id="express-check">
+              <span class="express-label__text">⚡ Envío Express</span>
+              <span class="express-label__desc">Entrega en 24hs</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Origen y Destino -->
+        <div class="form-section">
+          <div class="form-section__title">Ruta del envío</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-group__label" for="origin-select">
+                Origen <span class="required">*</span>
+              </label>
+              <select id="origin-select" class="form-select" required>
+                <option value="" disabled selected>Seleccioná una provincia</option>
+              </select>
+              <!-- Subdivisión: solo visible en modo Internacional -->
+              <div id="subdivision-wrapper" class="subdivision-wrapper">
+                <select id="origin-subdivision" class="form-select" style="margin-top: 0.5rem;">
+                  <option value="" disabled selected>Primero seleccioná un país</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-group__label" for="destination-select">
+                Destino (Argentina) <span class="required">*</span>
+              </label>
+              <select id="destination-select" class="form-select" required>
+                <option value="" disabled selected>Seleccioná una provincia</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Peso -->
+        <div class="form-section">
+          <div class="form-section__title">Detalles del paquete</div>
+
+          <div class="form-row form-row--single">
+            <div class="form-group">
+              <label class="form-group__label" for="weight-input">
+                Peso (kg) <span class="required">*</span>
+              </label>
+              <input
+                type="number"
+                id="weight-input"
+                class="form-input"
+                placeholder="Ej: 10.5"
+                step="0.1"
+                min="0.1"
+                required
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón Submit -->
+        <button type="submit" id="submit-btn" class="btn-submit">
+          <span class="btn-submit__content">
+            <span class="btn-submit__text">Calcular Tarifa</span>
+            <span class="spinner"></span>
+          </span>
+        </button>
+
+      </form>
+
+      <!-- ════ Panel de Resultados ════ -->
+      <section id="result-panel" class="result-panel" aria-live="polite">
+        <div class="glass-card">
+
+          <div class="result-header">
+            <span class="result-header__title">✅ Resultado del cálculo</span>
+            <span id="result-type" class="result-header__type">Nacional</span>
+          </div>
+
+          <div class="result-main">
+            <div id="result-cost" class="result-main__cost">$0,00</div>
+            <div id="result-currency" class="result-main__currency">ARS</div>
+            <div id="result-days" class="result-main__days">🕐 — días hábiles</div>
+          </div>
+
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-item__icon">📋</div>
+              <div class="breakdown-item__label">Tarifa Base</div>
+              <div id="breakdown-base" class="breakdown-item__value">$0,00</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-item__icon">⚖️</div>
+              <div class="breakdown-item__label">Recargo Peso</div>
+              <div id="breakdown-dist" class="breakdown-item__value">$0,00</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-item__icon">🛃</div>
+              <div class="breakdown-item__label">Tasa Aduanera</div>
+              <div id="breakdown-tax" class="breakdown-item__value">$0,00</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ════ Panel de Error ════ -->
+      <section id="error-panel" class="error-panel" aria-live="assertive">
+        <div class="glass-card">
+          <div class="error-content">
+            <span class="error-content__icon">⚠️</span>
+            <div class="error-content__text">
+              <div id="error-title" class="error-content__title">Error</div>
+              <div id="error-message" class="error-content__message">Ocurrió un error.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ════ Footer ════ -->
+    <footer class="app-footer">
+      <p class="app-footer__text">
+        Modular Shipping API v1.0 — 
+        <a href="/swagger-ui.html" class="app-footer__link" target="_blank">Documentación Swagger</a>
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  * Estrategia de cálculo para envíos internacionales.
  *
  * <p><b>Skill citada:</b> {@code .ai/skills/skill-international.md}</p>
- * <p><b>Fórmula:</b> {@code Total = (20000.0 + (Peso × 15.0)) × 1.25}</p>
+ * <p><b>Fórmula:</b> {@code Total = (25.0 + (Peso × 15.0)) × 1.25}</p>
  *
  * <ul>
- *   <li>Base Rate: $20,000</li>
+ *   <li>Base Rate: $25.0 USD</li>
  *   <li>Factor de peso: 15.0 por kg</li>
  *   <li>Recargo aduanero obligatorio: 25%</li>
  *   <li>Moneda: USD</li>
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InternationalShippingStrategy implements ShippingStrategy {
 
-    private static final double BASE_RATE = 20000.0;
+    private static final double BASE_RATE = 25.0;
     private static final double WEIGHT_FACTOR = 15.0;
     private static final double CUSTOMS_TAX_RATE = 0.25;
     private static final String CURRENCY = "USD";

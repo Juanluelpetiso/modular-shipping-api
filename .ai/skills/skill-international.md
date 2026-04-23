@@ -20,16 +20,16 @@ Load this skill when:
 ### Pattern 1: International Rate Formula
 
 [cite_start]Para asegurar la precisión y evitar alucinaciones en el cálculo financiero [cite: 562, 597-598], se debe seguir esta fórmula estrictamente:
-Total = (20000.0 + (Peso * 15.0)) * 1.25
+Total = (25.0 + (Peso * 15.0)) * 1.25
 
 ```java
 // Logic implementation in Java 21
 public double calculate(double weight) {
-    double baseRate = 20000.0;     // Tarifa base internacional
+    double baseRate = 25.0;        // Tarifa base internacional (USD)
     double distanceFactor = 15.0;  // Factor de distancia internacional
     double subtotal = baseRate + (weight * distanceFactor);
     
-    return subtotal * 1.25; // Aplicación del 15% de recargo aduanero
+    return subtotal * 1.25; // Aplicación del 25% de recargo aduanero
 }
 
 Pattern 2: 
