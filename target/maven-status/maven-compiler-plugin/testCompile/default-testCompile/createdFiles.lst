@@ -1,0 +1,6 @@
+com\jretamales\shipping\domain\strategy\ExpressShippingStrategyTest.class
+com\jretamales\shipping\ShippingApplicationTests.class
+com\jretamales\shipping\domain\strategy\InternationalShippingStrategyTest.class
+com\jretamales\shipping\domain\strategy\NationalShippingStrategyTest.class
+com\jretamales\shipping\infrastructure\api\controller\ShippingControllerIntegrationTest.class
+com\jretamales\shipping\application\service\ShippingServiceTest.class
